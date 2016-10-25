@@ -54,7 +54,7 @@ RRotF <- function (x, y, K = round(ncol(x)/3, 0), L = 10, mtry=floor(sqrt(ncol(x
       pcdata <- list()
       loadings <- list()
       for (i in 1:L) {
-            Independents <- x[, sample(1:ncol(x), ncol(x))]
+            Independents <- x[, sample(1:ncol(x), ncol(x)), drop = FALSE]
             n <- 0
             subsets[[i]] <- list()
             SelectedClass[[i]] <- list()
@@ -64,8 +64,7 @@ RRotF <- function (x, y, K = round(ncol(x)/3, 0), L = 10, mtry=floor(sqrt(ncol(x
             loadings[[i]] <- list()
             for (j in seq(1, K)) {
                   n <- n + M
-                  subsets[[i]][[j]] <- data.frame(Independents[, (n -
-                                                                        (M - 1)):n], y)
+                  subsets[[i]][[j]] <- data.frame(Independents[, (n - (M - 1)):n, drop = FALSE], y)
                   SelectedClass[[i]][[j]] <- as.integer(sample(levels(as.factor(y)),
                                                                1))
                   IndependentsClassSubset[[i]][[j]] <- subsets[[i]][[j]][subsets[[i]][[j]]$y ==
@@ -74,10 +73,8 @@ RRotF <- function (x, y, K = round(ncol(x)/3, 0), L = 10, mtry=floor(sqrt(ncol(x
                                                                                                     round(0.75 * nrow(IndependentsClassSubset[[i]][[j]])),
                                                                                                     replace = TRUE), ]
                   pcdata[[i]][[j]] <- princomp(IndependentsClassSubsetBoot[[i]][[j]][,
-                                                                                     !colnames(IndependentsClassSubsetBoot[[i]][[j]]) %in%
-                                                                                           "y"])
-                  loadings[[i]][[j]] <- pcdata[[i]][[j]]$loadings[,
-                                                                  ]
+                                                                                     !colnames(IndependentsClassSubsetBoot[[i]][[j]]) %in% "y", drop = FALSE])
+                  loadings[[i]][[j]] <- pcdata[[i]][[j]]$loadings[,]
                   colnames(loadings[[i]][[j]]) <- dimnames(loadings[[i]][[j]])[[1]]
                   loadings[[i]][[j]] <- data.frame(dimnames(loadings[[i]][[j]])[[1]],
                                                    loadings[[i]][[j]])
