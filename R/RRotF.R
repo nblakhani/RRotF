@@ -6,7 +6,7 @@
 #' @param K The number of variable subsets. The default is the value K that results in three features per subset.
 #' @param L The number of base classfiers.
 #' @param mtry Number of variables randomly sampled as candidates at each split.
-#' @param model Specifies the base learner model: 'rpart' for ordinary classification trees; 'rf' for
+#' @param model Specifies the base learner model: 'rf' for
 #'    randomised trees; 'ridge', 'pls', 'log', 'svm' or 'rnd' for randomised trees using oblique splits with the corresponding model.
 #' @param ... Additional arguments specified to \code{randomForest}, \code{rpart} or \code{obliqueRF}.
 #' @return A fitted model object of type 'RRotF', which is a list containing base learner fits and PCA loadings.
