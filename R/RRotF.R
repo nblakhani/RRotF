@@ -1,8 +1,8 @@
 #' Fit a Random Rotation Forest.
 #'
 #' Fit a Random Rotation Forest using randomised trees with orthogonal or oblique splits as base learners.
-#' @param x Training data input matrix.
-#' @param y Training data response.
+#' @param x Training data input matrix or data frame of predictors.
+#' @param y Training data response factor vector.
 #' @param K The number of variable subsets. The default is the value K that results in three features per subset.
 #' @param L The number of base classfiers.
 #' @param mtry Number of variables randomly sampled as candidates at each split.
@@ -35,6 +35,7 @@ RRotF <- function (x, y, K = round(ncol(x)/3, 0), L = 10, mtry=floor(sqrt(ncol(x
       require(randomForest)
       require(rpart)
       require(obliqueRF)
+      if(!is.data.frame(x)) x <- as.data.frame(x)
       x <- data.frame(sapply(x, as.numeric))
       y <- factor(as.numeric(y)-1)
       while (ncol(x)%%K != 0) {
